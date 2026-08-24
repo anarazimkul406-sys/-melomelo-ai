@@ -37,14 +37,41 @@
       color: transparent;
     }
 
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
     .login {
       background: #191827;
       color: white;
       border: none;
       padding: 12px 20px;
       border-radius: 12px;
-      cursor: pointer;
       font-weight: bold;
+    }
+
+    .logout {
+      background: #f1eff8;
+      color: #191827;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 10px;
+      font-weight: bold;
+    }
+
+    .user-email {
+      font-size: 14px;
+      color: #777286;
+      max-width: 180px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .hero {
@@ -132,6 +159,13 @@
       padding: 25px;
       min-height: 190px;
       box-shadow: 0 10px 30px rgba(40, 20, 80, 0.04);
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 15px 35px rgba(40, 20, 80, 0.09);
     }
 
     .icon {
@@ -190,7 +224,6 @@
       padding: 14px;
       border-radius: 12px;
       font-weight: bold;
-      cursor: pointer;
     }
 
     footer {
@@ -199,6 +232,114 @@
       background: white;
       color: #888394;
       border-top: 1px solid #eeeaf8;
+    }
+
+    /* AUTH MODAL */
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(20, 15, 40, 0.55);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 1000;
+    }
+
+    .modal.active {
+      display: flex;
+    }
+
+    .auth-box {
+      width: 100%;
+      max-width: 420px;
+      background: white;
+      border-radius: 24px;
+      padding: 30px;
+      box-shadow: 0 25px 80px rgba(0,0,0,0.2);
+      position: relative;
+    }
+
+    .close {
+      position: absolute;
+      top: 15px;
+      right: 18px;
+      border: none;
+      background: transparent;
+      font-size: 26px;
+      color: #777;
+    }
+
+    .auth-box h2 {
+      font-size: 30px;
+      margin-bottom: 8px;
+    }
+
+    .auth-subtitle {
+      color: #777286;
+      margin-bottom: 25px;
+    }
+
+    .auth-box label {
+      display: block;
+      font-size: 14px;
+      font-weight: bold;
+      margin: 15px 0 7px;
+    }
+
+    .auth-box input {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #ddd8eb;
+      border-radius: 12px;
+      outline: none;
+      font-size: 16px;
+    }
+
+    .auth-box input:focus {
+      border-color: #8b5cf6;
+    }
+
+    .auth-submit {
+      width: 100%;
+      margin-top: 20px;
+      padding: 15px;
+      border: none;
+      border-radius: 12px;
+      color: white;
+      background: linear-gradient(90deg, #7c3aed, #ec4899);
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .switch-auth {
+      text-align: center;
+      margin-top: 20px;
+      color: #777286;
+      font-size: 14px;
+    }
+
+    .switch-auth button {
+      border: none;
+      background: transparent;
+      color: #7c3aed;
+      font-weight: bold;
+    }
+
+    .message {
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 10px;
+      background: #f6f3ff;
+      color: #5c45a8;
+      display: none;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .message.show {
+      display: block;
     }
 
     @media(max-width: 800px) {
@@ -214,6 +355,10 @@
       .price.pro {
         transform: none;
       }
+
+      .user-email {
+        display: none;
+      }
     }
   </style>
 </head>
@@ -221,12 +366,36 @@
 <body>
 
   <nav>
-    <div class="logo">✨ MeloMelo AI</div>
 
-    <button class="login">
-      Login
-    </button>
+    <div class="logo">
+      ✨ MeloMelo AI
+    </div>
+
+    <div class="nav-actions">
+
+      <span
+        id="userEmail"
+        class="user-email"
+        style="display:none;">
+      </span>
+
+      <button
+        id="loginButton"
+        class="login">
+        Login
+      </button>
+
+      <button
+        id="logoutButton"
+        class="logout"
+        style="display:none;">
+        Logout
+      </button>
+
+    </div>
+
   </nav>
+
 
   <section class="hero">
 
@@ -246,7 +415,9 @@
       beautiful cartoons in minutes.
     </p>
 
-    <a href="#pricing" class="start">
+    <a
+      href="#pricing"
+      class="start">
       Start Creating Free →
     </a>
 
@@ -265,36 +436,71 @@
 
     <div class="features">
 
-      <div class="card">
+      <div
+        class="card"
+        onclick="openLoginIfNeeded('AI Image')">
+
         <div class="icon">🖼️</div>
-        <h3>AI Image</h3>
+
+        <h3>
+          AI Image
+        </h3>
+
         <p>
           Turn your ideas into beautiful AI images.
         </p>
+
       </div>
 
-      <div class="card">
+
+      <div
+        class="card"
+        onclick="openLoginIfNeeded('AI Video')">
+
         <div class="icon">🎬</div>
-        <h3>AI Video</h3>
+
+        <h3>
+          AI Video
+        </h3>
+
         <p>
           Transform images and prompts into videos.
         </p>
+
       </div>
 
-      <div class="card">
+
+      <div
+        class="card"
+        onclick="openLoginIfNeeded('Cartoon Maker')">
+
         <div class="icon">🧸</div>
-        <h3>Cartoon Maker</h3>
+
+        <h3>
+          Cartoon Maker
+        </h3>
+
         <p>
           Create characters and magical cartoon scenes.
         </p>
+
       </div>
 
-      <div class="card">
+
+      <div
+        class="card"
+        onclick="openLoginIfNeeded('AI Voice')">
+
         <div class="icon">🎙️</div>
-        <h3>AI Voice</h3>
+
+        <h3>
+          AI Voice
+        </h3>
+
         <p>
           Give your characters natural AI voices.
         </p>
+
       </div>
 
     </div>
@@ -302,7 +508,9 @@
   </section>
 
 
-  <section class="section" id="pricing">
+  <section
+    class="section"
+    id="pricing">
 
     <h2>
       Choose your plan
@@ -316,7 +524,9 @@
 
       <div class="price">
 
-        <h3>Starter</h3>
+        <h3>
+          Starter
+        </h3>
 
         <div class="amount">
           $9.99
@@ -329,7 +539,7 @@
           <li>Cartoon Maker</li>
         </ul>
 
-        <button>
+        <button onclick="choosePlan('Starter')">
           Choose Starter
         </button>
 
@@ -353,7 +563,7 @@
           <li>AI Voice</li>
         </ul>
 
-        <button>
+        <button onclick="choosePlan('Pro')">
           Choose Pro
         </button>
 
@@ -377,7 +587,7 @@
           <li>No watermark</li>
         </ul>
 
-        <button>
+        <button onclick="choosePlan('Creator')">
           Choose Creator
         </button>
 
@@ -391,6 +601,640 @@
   <footer>
     © 2026 MeloMelo AI · Create. Animate. Imagine.
   </footer>
+
+
+  <!-- AUTH MODAL -->
+
+  <div
+    id="authModal"
+    class="modal">
+
+    <div class="auth-box">
+
+      <button
+        class="close"
+        onclick="closeAuth()">
+        ×
+      </button>
+
+      <h2 id="authTitle">
+        Welcome back 👋
+      </h2>
+
+      <p
+        id="authSubtitle"
+        class="auth-subtitle">
+        Login to continue creating.
+      </p>
+
+
+      <form id="authForm">
+
+        <label>
+          Email
+        </label>
+
+        <input
+          id="email"
+          type="email"
+          placeholder="you@example.com"
+          required
+        >
+
+
+        <label>
+          Password
+        </label>
+
+        <input
+          id="password"
+          type="password"
+          placeholder="••••••••"
+          minlength="6"
+          required
+        >
+
+
+        <button
+          id="authSubmit"
+          class="auth-submit"
+          type="submit">
+
+          Login
+
+        </button>
+
+      </form>
+
+
+      <div
+        id="authMessage"
+        class="message">
+      </div>
+
+
+      <div class="switch-auth">
+
+        <span id="switchText">
+          Don't have an account?
+        </span>
+
+        <button
+          id="switchButton"
+          type="button">
+          Sign Up
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- SUPABASE -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <script>
+
+    /* ==============================
+       SUPABASE CONFIG
+    ============================== */
+
+    const SUPABASE_URL =
+      "https://uzfwtekmwimfmbkykxsy.supabase.co";
+
+    const SUPABASE_PUBLISHABLE_KEY =
+      "PASTE_YOUR_SB_PUBLISHABLE_KEY_HERE";
+
+
+    const { createClient } =
+      supabase;
+
+    const supabaseClient =
+      createClient(
+        SUPABASE_URL,
+        SUPABASE_PUBLISHABLE_KEY
+      );
+
+
+    /* ==============================
+       ELEMENTS
+    ============================== */
+
+    const authModal =
+      document.getElementById("authModal");
+
+    const authForm =
+      document.getElementById("authForm");
+
+    const authTitle =
+      document.getElementById("authTitle");
+
+    const authSubtitle =
+      document.getElementById("authSubtitle");
+
+    const authSubmit =
+      document.getElementById("authSubmit");
+
+    const switchButton =
+      document.getElementById("switchButton");
+
+    const switchText =
+      document.getElementById("switchText");
+
+    const authMessage =
+      document.getElementById("authMessage");
+
+    const loginButton =
+      document.getElementById("loginButton");
+
+    const logoutButton =
+      document.getElementById("logoutButton");
+
+    const userEmail =
+      document.getElementById("userEmail");
+
+
+    let isLoginMode = true;
+
+
+    /* ==============================
+       AUTH MODAL
+    ============================== */
+
+    function openAuth() {
+
+      authModal.classList.add("active");
+
+      clearMessage();
+
+    }
+
+
+    function closeAuth() {
+
+      authModal.classList.remove("active");
+
+    }
+
+
+    loginButton.addEventListener(
+      "click",
+      openAuth
+    );
+
+
+    authModal.addEventListener(
+      "click",
+      function(event) {
+
+        if (
+          event.target === authModal
+        ) {
+
+          closeAuth();
+
+        }
+
+      }
+    );
+
+
+    /* ==============================
+       LOGIN / SIGN UP SWITCH
+    ============================== */
+
+    switchButton.addEventListener(
+      "click",
+      function() {
+
+        isLoginMode =
+          !isLoginMode;
+
+        clearMessage();
+
+        if (isLoginMode) {
+
+          authTitle.textContent =
+            "Welcome back 👋";
+
+          authSubtitle.textContent =
+            "Login to continue creating.";
+
+          authSubmit.textContent =
+            "Login";
+
+          switchText.textContent =
+            "Don't have an account?";
+
+          switchButton.textContent =
+            "Sign Up";
+
+        } else {
+
+          authTitle.textContent =
+            "Create your account ✨";
+
+          authSubtitle.textContent =
+            "Sign up and start creating.";
+
+          authSubmit.textContent =
+            "Create Account";
+
+          switchText.textContent =
+            "Already have an account?";
+
+          switchButton.textContent =
+            "Login";
+
+        }
+
+      }
+    );
+
+
+    /* ==============================
+       MESSAGE
+    ============================== */
+
+    function showMessage(
+      message
+    ) {
+
+      authMessage.textContent =
+        message;
+
+      authMessage.classList.add(
+        "show"
+      );
+
+    }
+
+
+    function clearMessage() {
+
+      authMessage.textContent =
+        "";
+
+      authMessage.classList.remove(
+        "show"
+      );
+
+    }
+
+
+    /* ==============================
+       LOGIN / SIGN UP
+    ============================== */
+
+    authForm.addEventListener(
+      "submit",
+      async function(event) {
+
+        event.preventDefault();
+
+        clearMessage();
+
+        const email =
+          document
+            .getElementById("email")
+            .value
+            .trim();
+
+        const password =
+          document
+            .getElementById("password")
+            .value;
+
+
+        authSubmit.disabled =
+          true;
+
+        authSubmit.textContent =
+          "Please wait...";
+
+
+        try {
+
+          if (isLoginMode) {
+
+            const {
+              data,
+              error
+            } =
+              await supabaseClient.auth
+                .signInWithPassword({
+
+                  email,
+                  password
+
+                });
+
+
+            if (error) {
+
+              throw error;
+
+            }
+
+
+            showMessage(
+              "Login successful! 🎉"
+            );
+
+
+            setTimeout(
+              closeAuth,
+              1000
+            );
+
+
+          } else {
+
+            const {
+              data,
+              error
+            } =
+              await supabaseClient.auth
+                .signUp({
+
+                  email,
+                  password,
+
+                  options: {
+
+                    emailRedirectTo:
+                      window.location.origin
+
+                  }
+
+                });
+
+
+            if (error) {
+
+              throw error;
+
+            }
+
+
+            if (
+              data.user &&
+              !data.session
+            ) {
+
+              showMessage(
+                "Account created! Please check your email to confirm your account. 📧"
+              );
+
+            } else {
+
+              showMessage(
+                "Account created successfully! 🎉"
+              );
+
+            }
+
+          }
+
+        } catch (error) {
+
+          console.error(
+            error
+          );
+
+          showMessage(
+            error.message ||
+            "Something went wrong."
+          );
+
+        } finally {
+
+          authSubmit.disabled =
+            false;
+
+          authSubmit.textContent =
+            isLoginMode
+              ? "Login"
+              : "Create Account";
+
+        }
+
+      }
+    );
+
+
+    /* ==============================
+       USER UI
+    ============================== */
+
+    function updateUserUI(
+      user
+    ) {
+
+      if (user) {
+
+        loginButton.style.display =
+          "none";
+
+        logoutButton.style.display =
+          "block";
+
+        userEmail.style.display =
+          "block";
+
+        userEmail.textContent =
+          user.email || "";
+
+      } else {
+
+        loginButton.style.display =
+          "block";
+
+        logoutButton.style.display =
+          "none";
+
+        userEmail.style.display =
+          "none";
+
+        userEmail.textContent =
+          "";
+
+      }
+
+    }
+
+
+    /* ==============================
+       CHECK CURRENT SESSION
+    ============================== */
+
+    async function checkUser() {
+
+      const {
+        data,
+        error
+      } =
+        await supabaseClient.auth
+          .getSession();
+
+      if (error) {
+
+        console.error(
+          error
+        );
+
+        return;
+
+      }
+
+      updateUserUI(
+        data.session?.user || null
+      );
+
+    }
+
+
+    checkUser();
+
+
+    /* ==============================
+       AUTH STATE CHANGES
+    ============================== */
+
+    supabaseClient.auth
+      .onAuthStateChange(
+        function(
+          event,
+          session
+        ) {
+
+          updateUserUI(
+            session?.user || null
+          );
+
+        }
+      );
+
+
+    /* ==============================
+       LOGOUT
+    ============================== */
+
+    logoutButton.addEventListener(
+      "click",
+      async function() {
+
+        const {
+          error
+        } =
+          await supabaseClient.auth
+            .signOut();
+
+        if (error) {
+
+          alert(
+            error.message
+          );
+
+          return;
+
+        }
+
+        alert(
+          "You have been logged out."
+        );
+
+      }
+    );
+
+
+    /* ==============================
+       AI TOOLS
+    ============================== */
+
+    async function openLoginIfNeeded(
+      toolName
+    ) {
+
+      const {
+        data
+      } =
+        await supabaseClient.auth
+          .getSession();
+
+      const session =
+        data.session;
+
+
+      if (!session) {
+
+        showMessageOutside(
+          ${toolName} requires an account. Please login or sign up first.
+        );
+
+        openAuth();
+
+        return;
+
+      }
+
+
+      alert(
+        ${toolName} is coming soon! 🚀
+      );
+
+    }
+
+
+    function showMessageOutside(
+      message
+    ) {
+
+      console.log(
+        message
+      );
+
+    }
+
+
+    /* ==============================
+       PRICING
+    ============================== */
+
+    async function choosePlan(
+      plan
+    ) {
+
+      const {
+        data
+      } =
+        await supabaseClient.auth
+          .getSession();
+
+
+      if (!data.session) {
+
+        showMessageOutside(
+          "Please login before choosing a plan."
+        );
+
+        openAuth();
+
+        return;
+
+      }
+
+
+      alert(
+        ${plan} selected. Payment system will be connected next. 💳
+      );
+
+    }
+
+  </script>
 
 </body>
 </html>
