@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>MeloMelo AI — Create Magical Videos</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #faf9ff;
+      color: #191827;
+    }
+
+    nav {
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 7%;
+      background: white;
+      border-bottom: 1px solid #eeeaf8;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      background: linear-gradient(90deg, #8b5cf6, #ec4899);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .login {
+      background: #191827;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .hero {
+      text-align: center;
+      padding: 100px 20px 80px;
+      background: radial-gradient(
+        circle at top,
+        #eadfff,
+        transparent 50%
+      );
+    }
+
+    .badge {
+      display: inline-block;
+      background: white;
+      color: #7654d9;
+      padding: 9px 16px;
+      border-radius: 50px;
+      font-weight: bold;
+      box-shadow: 0 5px 25px rgba(100, 70, 180, 0.1);
+    }
+
+    h1 {
+      font-size: 70px;
+      max-width: 900px;
+      margin: 25px auto;
+      line-height: 1;
+      letter-spacing: -3px;
+    }
+
+    .gradient {
+      background: linear-gradient(90deg, #7c3aed, #ec4899);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero p {
+      max-width: 650px;
+      margin: auto;
+      color: #716d80;
+      font-size: 20px;
+      line-height: 1.6;
+    }
+
+    .start {
+      display: inline-block;
+      margin-top: 32px;
+      padding: 16px 28px;
+      border-radius: 14px;
+      color: white;
+      text-decoration: none;
+      font-weight: bold;
+      background: linear-gradient(90deg, #7c3aed, #ec4899);
+      box-shadow: 0 15px 30px rgba(124, 58, 237, 0.25);
+    }
+
+    .section {
+      max-width: 1150px;
+      margin: auto;
+      padding: 80px 20px;
+    }
+
+    .section h2 {
+      text-align: center;
+      font-size: 40px;
+      margin-bottom: 12px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #777286;
+      margin-bottom: 40px;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .card {
+      background: white;
+      border: 1px solid #eeeaf8;
+      border-radius: 22px;
+      padding: 25px;
+      min-height: 190px;
+      box-shadow: 0 10px 30px rgba(40, 20, 80, 0.04);
+    }
+
+    .icon {
+      font-size: 38px;
+    }
+
+    .card h3 {
+      margin: 15px 0 8px;
+    }
+
+    .card p {
+      color: #777286;
+      line-height: 1.5;
+    }
+
+    .pricing {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .price {
+      background: white;
+      border: 1px solid #eeeaf8;
+      border-radius: 22px;
+      padding: 30px;
+    }
+
+    .price.pro {
+      border: 2px solid #8b5cf6;
+      transform: translateY(-8px);
+    }
+
+    .price h3 {
+      font-size: 22px;
+    }
+
+    .amount {
+      font-size: 40px;
+      font-weight: bold;
+      margin: 18px 0;
+    }
+
+    .price ul {
+      padding-left: 20px;
+      color: #666174;
+      line-height: 2;
+      margin-bottom: 20px;
+    }
+
+    .price button {
+      width: 100%;
+      border: none;
+      background: #191827;
+      color: white;
+      padding: 14px;
+      border-radius: 12px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    footer {
+      text-align: center;
+      padding: 35px;
+      background: white;
+      color: #888394;
+      border-top: 1px solid #eeeaf8;
+    }
+
+    @media(max-width: 800px) {
+      h1 {
+        font-size: 48px;
+      }
+
+      .features,
+      .pricing {
+        grid-template-columns: 1fr;
+      }
+
+      .price.pro {
+        transform: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <div class="logo">✨ MeloMelo AI</div>
+
+    <button class="login">
+      Login
+    </button>
+  </nav>
+
+  <section class="hero">
+
+    <span class="badge">
+      🎁 7-day free trial
+    </span>
+
+    <h1>
+      Turn your ideas into
+      <span class="gradient">
+        magical videos ✨
+      </span>
+    </h1>
+
+    <p>
+      Create AI images, animated characters and
+      beautiful cartoons in minutes.
+    </p>
+
+    <a href="#pricing" class="start">
+      Start Creating Free →
+    </a>
+
+  </section>
+
+
+  <section class="section">
+
+    <h2>
+      Everything creators need
+    </h2>
+
+    <p class="subtitle">
+      Create amazing AI content in one place.
+    </p>
+
+    <div class="features">
+
+      <div class="card">
+        <div class="icon">🖼️</div>
+        <h3>AI Image</h3>
+        <p>
+          Turn your ideas into beautiful AI images.
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="icon">🎬</div>
+        <h3>AI Video</h3>
+        <p>
+          Transform images and prompts into videos.
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="icon">🧸</div>
+        <h3>Cartoon Maker</h3>
+        <p>
+          Create characters and magical cartoon scenes.
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="icon">🎙️</div>
+        <h3>AI Voice</h3>
+        <p>
+          Give your characters natural AI voices.
+        </p>
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <section class="section" id="pricing">
+
+    <h2>
+      Choose your plan
+    </h2>
+
+    <p class="subtitle">
+      Start with a 7-day free trial.
+    </p>
+
+    <div class="pricing">
+
+      <div class="price">
+
+        <h3>Starter</h3>
+
+        <div class="amount">
+          $9.99
+        </div>
+
+        <ul>
+          <li>200 credits</li>
+          <li>AI Image</li>
+          <li>AI Video</li>
+          <li>Cartoon Maker</li>
+        </ul>
+
+        <button>
+          Choose Starter
+        </button>
+
+      </div>
+
+
+      <div class="price pro">
+
+        <h3>
+          Pro ⭐
+        </h3>
+
+        <div class="amount">
+          $19.99
+        </div>
+
+        <ul>
+          <li>600 credits</li>
+          <li>AI Image + Video</li>
+          <li>Cartoon Maker</li>
+          <li>AI Voice</li>
+        </ul>
+
+        <button>
+          Choose Pro
+        </button>
+
+      </div>
+
+
+      <div class="price">
+
+        <h3>
+          Creator
+        </h3>
+
+        <div class="amount">
+          $39.99
+        </div>
+
+        <ul>
+          <li>1500 credits</li>
+          <li>All AI tools</li>
+          <li>Priority generation</li>
+          <li>No watermark</li>
+        </ul>
+
+        <button>
+          Choose Creator
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <footer>
+    © 2026 MeloMelo AI · Create. Animate. Imagine.
+  </footer>
+
+</body>
+</html>
