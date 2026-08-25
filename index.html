@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>MeloMelo AI — Create Magical Videos</title>
+  <title>MeloMelo AI — Create Magical Content</title>
 
   <style>
     * {
@@ -129,7 +129,7 @@
     }
 
     .section {
-      max-width: 1150px;
+      max-width: 1200px;
       margin: auto;
       padding: 80px 20px;
     }
@@ -148,8 +148,8 @@
 
     .features {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 18px;
     }
 
     .card {
@@ -157,15 +157,15 @@
       border: 1px solid #eeeaf8;
       border-radius: 22px;
       padding: 25px;
-      min-height: 190px;
+      min-height: 210px;
       box-shadow: 0 10px 30px rgba(40, 20, 80, 0.04);
       cursor: pointer;
       transition: 0.2s;
     }
 
     .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 15px 35px rgba(40, 20, 80, 0.09);
+      transform: translateY(-5px);
+      box-shadow: 0 15px 35px rgba(40, 20, 80, 0.10);
     }
 
     .icon {
@@ -234,7 +234,7 @@
       border-top: 1px solid #eeeaf8;
     }
 
-    /* AUTH MODAL */
+    /* MODALS */
 
     .modal {
       position: fixed;
@@ -245,15 +245,16 @@
       justify-content: center;
       padding: 20px;
       z-index: 1000;
+      overflow-y: auto;
     }
 
     .modal.active {
       display: flex;
     }
 
-    .auth-box {
+    .modal-box {
       width: 100%;
-      max-width: 420px;
+      max-width: 450px;
       background: white;
       border-radius: 24px;
       padding: 30px;
@@ -271,37 +272,47 @@
       color: #777;
     }
 
-    .auth-box h2 {
+    .modal-box h2 {
       font-size: 30px;
       margin-bottom: 8px;
     }
 
-    .auth-subtitle {
+    .modal-subtitle {
       color: #777286;
       margin-bottom: 25px;
     }
 
-    .auth-box label {
+    label {
       display: block;
       font-size: 14px;
       font-weight: bold;
       margin: 15px 0 7px;
     }
 
-    .auth-box input {
+    input,
+    textarea,
+    select {
       width: 100%;
       padding: 14px;
       border: 1px solid #ddd8eb;
       border-radius: 12px;
       outline: none;
       font-size: 16px;
+      background: white;
     }
 
-    .auth-box input:focus {
+    input:focus,
+    textarea:focus,
+    select:focus {
       border-color: #8b5cf6;
     }
 
-    .auth-submit {
+    textarea {
+      min-height: 110px;
+      resize: vertical;
+    }
+
+    .submit-button {
       width: 100%;
       margin-top: 20px;
       padding: 15px;
@@ -342,6 +353,25 @@
       display: block;
     }
 
+    .music-preview {
+      margin-top: 20px;
+      padding: 20px;
+      background: #faf9ff;
+      border-radius: 15px;
+      text-align: center;
+      display: none;
+    }
+
+    .music-preview.show {
+      display: block;
+    }
+
+    @media(max-width: 1100px) {
+      .features {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
     @media(max-width: 800px) {
       h1 {
         font-size: 48px;
@@ -357,13 +387,15 @@
       }
 
       .user-email {
-        display: none;
+        display: none !important;
       }
     }
   </style>
 </head>
 
 <body>
+
+  <!-- NAVIGATION -->
 
   <nav>
 
@@ -397,6 +429,8 @@
   </nav>
 
 
+  <!-- HERO -->
+
   <section class="hero">
 
     <span class="badge">
@@ -406,17 +440,18 @@
     <h1>
       Turn your ideas into
       <span class="gradient">
-        magical videos ✨
+        magical content ✨
       </span>
     </h1>
 
     <p>
-      Create AI images, animated characters and
-      beautiful cartoons in minutes.
+      Create AI images, videos, music,
+      animated characters and beautiful
+      cartoons in minutes.
     </p>
 
     <a
-      href="#pricing"
+      href="#tools"
       class="start">
       Start Creating Free →
     </a>
@@ -424,7 +459,11 @@
   </section>
 
 
-  <section class="section">
+  <!-- TOOLS -->
+
+  <section
+    class="section"
+    id="tools">
 
     <h2>
       Everything creators need
@@ -436,69 +475,112 @@
 
     <div class="features">
 
+
+      <!-- AI IMAGE -->
+
       <div
         class="card"
-        onclick="openLoginIfNeeded('AI Image')">
+        onclick="openTool('AI Image')">
 
-        <div class="icon">🖼️</div>
+        <div class="icon">
+          🖼️
+        </div>
 
         <h3>
           AI Image
         </h3>
 
         <p>
-          Turn your ideas into beautiful AI images.
+          Turn your ideas into beautiful
+          AI images.
         </p>
 
       </div>
 
 
+      <!-- AI VIDEO -->
+
       <div
         class="card"
-        onclick="openLoginIfNeeded('AI Video')">
+        onclick="openTool('AI Video')">
 
-        <div class="icon">🎬</div>
+        <div class="icon">
+          🎬
+        </div>
 
         <h3>
           AI Video
         </h3>
 
         <p>
-          Transform images and prompts into videos.
+          Transform images and prompts
+          into videos.
         </p>
 
       </div>
 
 
+      <!-- CARTOON -->
+
       <div
         class="card"
-        onclick="openLoginIfNeeded('Cartoon Maker')">
+        onclick="openTool('Cartoon Maker')">
 
-        <div class="icon">🧸</div>
+        <div class="icon">
+          🧸
+        </div>
 
         <h3>
           Cartoon Maker
         </h3>
 
         <p>
-          Create characters and magical cartoon scenes.
+          Create characters and magical
+          cartoon scenes.
         </p>
 
       </div>
 
 
+      <!-- VOICE -->
+
       <div
         class="card"
-        onclick="openLoginIfNeeded('AI Voice')">
+        onclick="openTool('AI Voice')">
 
-        <div class="icon">🎙️</div>
+        <div class="icon">
+          🎙️
+        </div>
 
         <h3>
           AI Voice
         </h3>
 
         <p>
-          Give your characters natural AI voices.
+          Give your characters natural
+          AI voices.
+        </p>
+
+      </div>
+
+
+      <!-- MUSIC -->
+
+      <div
+        class="card"
+        onclick="openMusicMaker()">
+
+        <div class="icon">
+          🎵
+        </div>
+
+        <h3>
+          AI Music
+        </h3>
+
+        <p>
+          Create original music from
+          your ideas.
         </p>
 
       </div>
@@ -507,6 +589,8 @@
 
   </section>
 
+
+  <!-- PRICING -->
 
   <section
     class="section"
@@ -521,6 +605,7 @@
     </p>
 
     <div class="pricing">
+
 
       <div class="price">
 
@@ -539,7 +624,8 @@
           <li>Cartoon Maker</li>
         </ul>
 
-        <button onclick="choosePlan('Starter')">
+        <button
+          onclick="choosePlan('Starter')">
           Choose Starter
         </button>
 
@@ -563,7 +649,8 @@
           <li>AI Voice</li>
         </ul>
 
-        <button onclick="choosePlan('Pro')">
+        <button
+          onclick="choosePlan('Pro')">
           Choose Pro
         </button>
 
@@ -587,7 +674,8 @@
           <li>No watermark</li>
         </ul>
 
-        <button onclick="choosePlan('Creator')">
+        <button
+          onclick="choosePlan('Creator')">
           Choose Creator
         </button>
 
@@ -598,18 +686,20 @@
   </section>
 
 
+  <!-- FOOTER -->
+
   <footer>
     © 2026 MeloMelo AI · Create. Animate. Imagine.
   </footer>
 
 
-  <!-- AUTH MODAL -->
+  <!-- LOGIN / SIGN UP MODAL -->
 
   <div
     id="authModal"
     class="modal">
 
-    <div class="auth-box">
+    <div class="modal-box">
 
       <button
         class="close"
@@ -623,10 +713,9 @@
 
       <p
         id="authSubtitle"
-        class="auth-subtitle">
+        class="modal-subtitle">
         Login to continue creating.
       </p>
-
 
       <form id="authForm">
 
@@ -641,7 +730,6 @@
           required
         >
 
-
         <label>
           Password
         </label>
@@ -654,10 +742,9 @@
           required
         >
 
-
         <button
           id="authSubmit"
-          class="auth-submit"
+          class="submit-button"
           type="submit">
 
           Login
@@ -666,12 +753,10 @@
 
       </form>
 
-
       <div
         id="authMessage"
         class="message">
       </div>
-
 
       <div class="switch-auth">
 
@@ -692,15 +777,164 @@
   </div>
 
 
+  <!-- AI MUSIC MODAL -->
+
+  <div
+    id="musicModal"
+    class="modal">
+
+    <div class="modal-box">
+
+      <button
+        class="close"
+        onclick="closeMusicMaker()">
+        ×
+      </button>
+
+      <h2>
+        🎵 AI Music
+      </h2>
+
+      <p class="modal-subtitle">
+        Create original music from your ideas.
+      </p>
+
+
+      <label>
+        Describe your music
+      </label>
+
+      <textarea
+        id="musicPrompt"
+        placeholder="Example: Happy children's song about animals in a magical forest">
+      </textarea>
+
+
+      <label>
+        Style
+      </label>
+
+      <select id="musicStyle">
+
+        <option>
+          Kids
+        </option>
+
+        <option>
+          Pop
+        </option>
+
+        <option>
+          Cinematic
+        </option>
+
+        <option>
+          Lo-fi
+        </option>
+
+        <option>
+          Electronic
+        </option>
+
+        <option>
+          Fantasy
+        </option>
+
+      </select>
+
+
+      <label>
+        Mood
+      </label>
+
+      <select id="musicMood">
+
+        <option>
+          Happy
+        </option>
+
+        <option>
+          Magical
+        </option>
+
+        <option>
+          Energetic
+        </option>
+
+        <option>
+          Calm
+        </option>
+
+        <option>
+          Emotional
+        </option>
+
+      </select>
+
+
+      <label>
+        Duration
+      </label>
+
+      <select id="musicDuration">
+
+        <option value="30">
+          30 seconds
+        </option>
+
+        <option value="60">
+          1 minute
+        </option>
+
+        <option value="120">
+          2 minutes
+        </option>
+
+      </select>
+
+
+      <button
+        class="submit-button"
+        onclick="generateMusic()">
+
+        🎵 Generate Music
+
+      </button>
+
+
+      <div
+        id="musicMessage"
+        class="message">
+      </div>
+
+      <div
+        id="musicPreview"
+        class="music-preview">
+
+        🎵
+
+        <br><br>
+
+        AI Music generation will be
+        connected here.
+
+      </div>
+
+    </div>
+
+  </div>
+
+
   <!-- SUPABASE -->
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+
   <script>
 
-    /* ==============================
+    /* =================================
        SUPABASE CONFIG
-    ============================== */
+    ================================= */
 
     const SUPABASE_URL =
       "https://uzfwtekmwimfmbkykxsy.supabase.co";
@@ -709,22 +943,22 @@
       "PASTE_YOUR_SB_PUBLISHABLE_KEY_HERE";
 
 
-    const { createClient } =
-      supabase;
-
     const supabaseClient =
-      createClient(
+      supabase.createClient(
         SUPABASE_URL,
         SUPABASE_PUBLISHABLE_KEY
       );
 
 
-    /* ==============================
+    /* =================================
        ELEMENTS
-    ============================== */
+    ================================= */
 
     const authModal =
       document.getElementById("authModal");
+
+    const musicModal =
+      document.getElementById("musicModal");
 
     const authForm =
       document.getElementById("authForm");
@@ -760,15 +994,15 @@
     let isLoginMode = true;
 
 
-    /* ==============================
-       AUTH MODAL
-    ============================== */
+    /* =================================
+       AUTH
+    ================================= */
 
     function openAuth() {
 
       authModal.classList.add("active");
 
-      clearMessage();
+      clearAuthMessage();
 
     }
 
@@ -802,9 +1036,9 @@
     );
 
 
-    /* ==============================
+    /* =================================
        LOGIN / SIGN UP SWITCH
-    ============================== */
+    ================================= */
 
     switchButton.addEventListener(
       "click",
@@ -813,7 +1047,7 @@
         isLoginMode =
           !isLoginMode;
 
-        clearMessage();
+        clearAuthMessage();
 
         if (isLoginMode) {
 
@@ -855,11 +1089,11 @@
     );
 
 
-    /* ==============================
-       MESSAGE
-    ============================== */
+    /* =================================
+       AUTH MESSAGE
+    ================================= */
 
-    function showMessage(
+    function showAuthMessage(
       message
     ) {
 
@@ -873,7 +1107,7 @@
     }
 
 
-    function clearMessage() {
+    function clearAuthMessage() {
 
       authMessage.textContent =
         "";
@@ -885,9 +1119,9 @@
     }
 
 
-    /* ==============================
+    /* =================================
        LOGIN / SIGN UP
-    ============================== */
+    ================================= */
 
     authForm.addEventListener(
       "submit",
@@ -895,7 +1129,7 @@
 
         event.preventDefault();
 
-        clearMessage();
+        clearAuthMessage();
 
         const email =
           document
@@ -921,14 +1155,16 @@
           if (isLoginMode) {
 
             const {
-              data,
               error
             } =
               await supabaseClient.auth
                 .signInWithPassword({
 
-                  email,
-                  password
+                  email:
+                    email,
+
+                  password:
+                    password
 
                 });
 
@@ -940,7 +1176,7 @@
             }
 
 
-            showMessage(
+            showAuthMessage(
               "Login successful! 🎉"
             );
 
@@ -960,8 +1196,11 @@
               await supabaseClient.auth
                 .signUp({
 
-                  email,
-                  password,
+                  email:
+                    email,
+
+                  password:
+                    password,
 
                   options: {
 
@@ -985,13 +1224,13 @@
               !data.session
             ) {
 
-              showMessage(
+              showAuthMessage(
                 "Account created! Please check your email to confirm your account. 📧"
               );
 
             } else {
 
-              showMessage(
+              showAuthMessage(
                 "Account created successfully! 🎉"
               );
 
@@ -1001,11 +1240,9 @@
 
         } catch (error) {
 
-          console.error(
-            error
-          );
+          console.error(error);
 
-          showMessage(
+          showAuthMessage(
             error.message ||
             "Something went wrong."
           );
@@ -1026,9 +1263,33 @@
     );
 
 
-    /* ==============================
-       USER UI
-    ============================== */
+    /* =================================
+       SESSION
+    ================================= */
+
+    async function checkUser() {
+
+      const {
+        data,
+        error
+      } =
+        await supabaseClient.auth
+          .getSession();
+
+      if (error) {
+
+        console.error(error);
+
+        return;
+
+      }
+
+      updateUserUI(
+        data.session?.user || null
+      );
+
+    }
+
 
     function updateUserUI(
       user
@@ -1067,42 +1328,8 @@
     }
 
 
-    /* ==============================
-       CHECK CURRENT SESSION
-    ============================== */
-
-    async function checkUser() {
-
-      const {
-        data,
-        error
-      } =
-        await supabaseClient.auth
-          .getSession();
-
-      if (error) {
-
-        console.error(
-          error
-        );
-
-        return;
-
-      }
-
-      updateUserUI(
-        data.session?.user || null
-      );
-
-    }
-
-
     checkUser();
 
-
-    /* ==============================
-       AUTH STATE CHANGES
-    ============================== */
 
     supabaseClient.auth
       .onAuthStateChange(
@@ -1119,9 +1346,9 @@
       );
 
 
-    /* ==============================
+    /* =================================
        LOGOUT
-    ============================== */
+    ================================= */
 
     logoutButton.addEventListener(
       "click",
@@ -1151,11 +1378,11 @@
     );
 
 
-    /* ==============================
+    /* =================================
        AI TOOLS
-    ============================== */
+    ================================= */
 
-    async function openLoginIfNeeded(
+    async function openTool(
       toolName
     ) {
 
@@ -1169,40 +1396,184 @@
         data.session;
 
 
-     if (!session) {
+      if (!session) {
 
-  showMessageOutside(
-    `${toolName} requires an account. Please login or sign up first.
-  );
+        openAuth();
 
-  openAuth();
+        showAuthMessage(
+          `${toolName} requires an account. Please login or sign up first.`
+        );
 
-  return;
+        return;
 
-}
+      }
 
 
       alert(
-        ${toolName} is coming soon! 🚀
+        `${toolName} will be connected next 🚀`
       );
 
     }
 
 
-    function showMessageOutside(
-      message
-    ) {
+    /* =================================
+       AI MUSIC
+    ================================= */
 
-      console.log(
-        message
+    async function openMusicMaker() {
+
+      const {
+        data
+      } =
+        await supabaseClient.auth
+          .getSession();
+
+
+      if (!data.session) {
+
+        openAuth();
+
+        showAuthMessage(
+          "Please login or sign up before creating music."
+        );
+
+        return;
+
+      }
+
+
+      musicModal.classList.add(
+        "active"
       );
 
     }
 
 
-    /* ==============================
+    function closeMusicMaker() {
+
+      musicModal.classList.remove(
+        "active"
+      );
+
+    }
+
+
+    musicModal.addEventListener(
+      "click",
+      function(event) {
+
+        if (
+          event.target === musicModal
+        ) {
+
+          closeMusicMaker();
+
+        }
+
+      }
+    );
+
+
+    async function generateMusic() {
+
+      const prompt =
+        document
+          .getElementById("musicPrompt")
+          .value
+          .trim();
+
+      const style =
+        document
+          .getElementById("musicStyle")
+          .value;
+
+      const mood =
+        document
+          .getElementById("musicMood")
+          .value;
+
+      const duration =
+        document
+          .getElementById("musicDuration")
+          .value;
+
+      const message =
+        document
+          .getElementById("musicMessage");
+
+      const preview =
+        document
+          .getElementById("musicPreview");
+
+
+      if (!prompt) {
+
+        message.textContent =
+          "Please describe the music you want to create.";
+
+        message.classList.add(
+          "show"
+        );
+
+        return;
+
+      }
+
+
+      const {
+        data
+      } =
+        await supabaseClient.auth
+          .getSession();
+
+
+      if (!data.session) {
+
+        closeMusicMaker();
+
+        openAuth();
+
+        return;
+
+      }
+
+
+      message.textContent =
+        `Preparing your ${duration}-second ${style} music... 🎵`;
+
+      message.classList.add(
+        "show"
+      );
+
+
+      preview.classList.add(
+        "show"
+      );
+
+
+      /*
+        REAL AI MUSIC API
+        WILL BE CONNECTED HERE.
+
+        Prompt:
+        ${prompt}
+
+        Style:
+        ${style}
+
+        Mood:
+        ${mood}
+
+        Duration:
+        ${duration}
+      */
+
+    }
+
+
+    /* =================================
        PRICING
-    ============================== */
+    ================================= */
 
     async function choosePlan(
       plan
@@ -1217,11 +1588,11 @@
 
       if (!data.session) {
 
-        showMessageOutside(
+        openAuth();
+
+        showAuthMessage(
           "Please login before choosing a plan."
         );
-
-        openAuth();
 
         return;
 
@@ -1229,7 +1600,7 @@
 
 
       alert(
-        ${plan} selected. Payment system will be connected next. 💳
+        `${plan} selected. Payment system will be connected next. 💳`
       );
 
     }
