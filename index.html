@@ -1474,82 +1474,140 @@
     );
 
 
-    async function generateMusic() {
+  async function generateMusic() {
 
-      const prompt =
-        document
-          .getElementById("musicPrompt")
-          .value
-          .trim();
+  const prompt = document
+    .getElementById("musicPrompt")
+    .value
+    .trim();
 
-      const style =
-        document
-          .getElementById("musicStyle")
-          .value;
+  const style = document
+    .getElementById("musicStyle")
+    .value;
 
-      const mood =
-        document
-          .getElementById("musicMood")
-          .value;
+  const mood = document
+    .getElementById("musicMood")
+    .value;
 
-      const duration =
-        document
-          .getElementById("musicDuration")
-          .value;
+  const duration = document
+    .getElementById("musicDuration")
+    .value;
 
-      const message =
-        document
-          .getElementById("musicMessage");
+  const message = document
+    .getElementById("musicMessage");
 
-      const preview =
-        document
-          .getElementById("musicPreview");
+  const preview = document
+    .getElementById("musicPreview");
 
+  if (!prompt) {
+    message.textContent =
+      "Please describe the music you want to create.";
 
-      if (!prompt) {
+    message.classList.add("show");
+    return;
+  }
 
-        message.textContent =
-          "Please describe the music you want to create.";
+  const { data } =
+    await supabaseClient.auth.getSession();
 
-        message.classList.add(
-          "show"
-        );
+  if (!data.session) {
+    closeMusicMaker();
+    openAuth();
+    return;
+  }
 
-        return;
+  message.textContent =
+    "Creating your music... 🎵 Please wait.";
 
+  message.classList.add("show");
+
+  preview.classList.remove("show");
+
+  try {
+
+    const response = await fetch(
+      "/api/music",
+      {
+        method: "POST",
+
+        headers: {
+          "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify({
+          prompt,
+          style,
+          mood,
+          duration
+        })
       }
+    );
 
+    const result =
+      await response.json();
 
-      const {
-        data
-      } =
-        await supabaseClient.auth
-          .getSession();
-
-
-      if (!data.session) {
-
-        closeMusicMaker();
-
-        openAuth();
-
-        return;
-
-      }
-
-
-      message.textContent =
-        `Preparing your ${duration}-second ${style} music... 🎵`;
-
-      message.classList.add(
-        "show"
+    if (!response.ok) {
+      throw new Error(
+        result.error ||
+        "Music generation failed."
       );
+    }
 
-
-      preview.classList.add(
-        "show"
+    if (!result.audioUrl) {
+      throw new Error(
+        "No audio file was returned."
       );
+    }
 
+    preview.innerHTML = `
+      <div style="font-size:40px;">🎵</div>
+
+      <h3 style="margin:10px 0;">
+        Your music is ready! 🎉
+      </h3>
+
+      <audio
+        controls
+        style="width:100%; margin-top:15px;"
+        src="${result.audioUrl}">
+      </audio>
+
+      <a
+        href="${result.audioUrl}"
+        target="_blank"
+        download
+        style="
+          display:inline-block;
+          margin-top:15px;
+          padding:12px 20px;
+          border-radius:10px;
+          background:#191827;
+          color:white;
+          text-decoration:none;
+          font-weight:bold;
+        "
+      >
+        ⬇️ Open / Download Music
+      </a>
+    `;
+
+    preview.classList.add("show");
+
+    message.textContent =
+      "Music created successfully! 🎵✨";
+
+  } catch (error) {
+
+    console.error(error);
+
+    message.textContent =
+      error.message ||
+      "Something went wrong.";
+
+    message.classList.add("show");
+
+  }
+}
 
       /*
         REAL AI MUSIC API
