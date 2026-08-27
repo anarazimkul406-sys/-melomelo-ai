@@ -1474,7 +1474,7 @@
     );
 
 
-  async function generateMusic() {
+async function generateMusic() {
 
   const prompt = document
     .getElementById("musicPrompt")
@@ -1489,10 +1489,6 @@
     .getElementById("musicMood")
     .value;
 
-  const duration = document
-    .getElementById("musicDuration")
-    .value;
-
   const message = document
     .getElementById("musicMessage");
 
@@ -1500,10 +1496,12 @@
     .getElementById("musicPreview");
 
   if (!prompt) {
+
     message.textContent =
       "Please describe the music you want to create.";
 
     message.classList.add("show");
+
     return;
   }
 
@@ -1511,13 +1509,19 @@
     await supabaseClient.auth.getSession();
 
   if (!data.session) {
+
     closeMusicMaker();
     openAuth();
+
+    showAuthMessage(
+      "Please login before creating music."
+    );
+
     return;
   }
 
   message.textContent =
-    "Creating your music... 🎵 Please wait.";
+    "Creating your 30-second music... 🎵 Please wait.";
 
   message.classList.add("show");
 
@@ -1535,10 +1539,9 @@
         },
 
         body: JSON.stringify({
-          prompt,
-          style,
-          mood,
-          duration
+          prompt: prompt,
+          style: style,
+          mood: mood
         })
       }
     );
@@ -1562,52 +1565,59 @@
     preview.innerHTML = `
       <div style="font-size:40px;">🎵</div>
 
-      <h3 style="margin:10px 0;">
-        Your music is ready! 🎉
-      </h3>
+      <br>
+
+      <strong>Your music is ready! 🎉</strong>
+
+      <br><br>
 
       <audio
         controls
-        style="width:100%; margin-top:15px;"
+        style="width:100%;"
         src="${result.audioUrl}">
       </audio>
+
+      <br><br>
 
       <a
         href="${result.audioUrl}"
         target="_blank"
-        download
+        rel="noopener"
         style="
           display:inline-block;
-          margin-top:15px;
-          padding:12px 20px;
-          border-radius:10px;
+          padding:12px 18px;
           background:#191827;
           color:white;
+          border-radius:10px;
           text-decoration:none;
           font-weight:bold;
-        "
-      >
-        ⬇️ Open / Download Music
+        ">
+        🎧 Open Music
       </a>
     `;
 
     preview.classList.add("show");
 
     message.textContent =
-      "Music created successfully! 🎵✨";
+      "Music created successfully! 🎉";
 
   } catch (error) {
 
-    console.error(error);
+    console.error(
+      "Music generation error:",
+      error
+    );
 
     message.textContent =
       error.message ||
-      "Something went wrong.";
+      "Something went wrong while creating music.";
 
     message.classList.add("show");
-
   }
 }
+
+  
+
 
       
 
